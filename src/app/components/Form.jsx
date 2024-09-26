@@ -16,11 +16,11 @@ export default function Form(){
     formState: { errors },
   } = useForm();
 
-  console.log(formState, useFormStatus);
+  // console.log(formState, useFormStatus);
   
 
   const onSubmit = async (data) => {
-    // console.log("Client-side data:", data);
+    console.log("Client-side data:", data);
     // Handle form submission via server action
     
     formaction(data);
