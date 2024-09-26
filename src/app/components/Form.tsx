@@ -15,7 +15,7 @@ export default function Form(){
     formState: { errors },
   } = useForm();
 
-  console.log(formState);
+  console.log(formState, useFormStatus);
   
 
   const onSubmit = async (data) => {
