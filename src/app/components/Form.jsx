@@ -1,4 +1,5 @@
 "use client"
+
 import { signupAction } from "@/other/userController"
 import { useFormState, useFormStatus } from "react-dom"
 import { useForm } from "react-hook-form"
@@ -7,7 +8,7 @@ import { useForm } from "react-hook-form"
 
 export default function Form(){
 
-  const [formState, formaction] = useFormState(signupAction, {})
+  const [formState, formaction] = useFormState(signupAction, {"hi": ""})
   
   const {
     register,
@@ -21,6 +22,7 @@ export default function Form(){
   const onSubmit = async (data) => {
     // console.log("Client-side data:", data);
     // Handle form submission via server action
+    
     formaction(data);
   };
   
@@ -33,8 +35,8 @@ export default function Form(){
             {errors?.email?.message && <p className="error">{errors?.email?.message}</p>}
           </div>
           <div className="">
-            <input type="password" {...register("passwordd", { required: "passwordd is required" })} className="w-full block py-2 px-3 rounded my-4 " placeholder="Password" autoComplete="off" />
-            {errors?.passwordd?.message && <p className="error">{errors?.passwordd?.message}</p>}
+            <input type="password" {...register("password", { required: "password is required" })} className="w-full block py-2 px-3 rounded my-4 " placeholder="Password" autoComplete="off" />
+            {errors?.password?.message && <p className="error">{errors?.password?.message}</p>}
           </div>
           <button className="bg-black rounded px-4 py-3 text-white" type="submit">Submit</button>
         </div>
