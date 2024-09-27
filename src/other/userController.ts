@@ -1,6 +1,8 @@
 "use server"
 import {getCollection} from "@/lib/db.js"
 import bcrypt from "bcrypt"
+import { cookies } from "next/headers"
+import jwt from "jsonwebtoken"
 
 export const signupAction = async (prevState, formData) => {
   console.log(formData);
@@ -14,7 +16,19 @@ export const signupAction = async (prevState, formData) => {
   user.password = bcrypt.hashSync(user?.password, salt);
 
   const userCollection = await getCollection("users");
-  await userCollection.insertOne(user);
+  const newUser = await userCollection.insertOne(user);
+  const userIdd = newUser.insertedId.toString()
+
+  const ourToken = jwt.sign({
+    userId: userIdd,
+    exp: Math.floor(Date.now() / 10000) + 60 * 60 * 24
+  }, process.env.Secret)
+
+  cookies().set("haikuapp", ourToken, {
+    httpOnly: true,
+    sameSite: "strict",
+    maxAge: 60 * 60 * 24
+  })
 
 
 
